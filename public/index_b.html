@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- judul di bar website --> 
+    <title>SIMTARU KETAPANG</title>
+<!-- logo di bar website --> 
+    <link rel="shortcut icon" href="./static/images/KetapangLogo.png">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        
+<link href="./assets/css/bootstrap.css" rel="stylesheet">
+<link href="./SIMTARUKU_files/jmc_peta_style.css" rel="stylesheet">
+<link href="./SIMTARUKU_files/jmc_peta_responsive.css" rel="stylesheet">
+<link href="./SIMTARUKU_files/all.min.css" rel="stylesheet" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
+<link href="./SIMTARUKU_files/leaflet.css" rel="stylesheet">
+<link href="./SIMTARUKU_files/MarkerCluster.css" rel="stylesheet" integrity="sha512-RLEjtaFGdC4iQMJDbMzim/dOvAu+8Qp9sw7QE4wIMYcg2goVoivzwgSZq9CsIxp4xKAZPKh5J2f2lOko2Ze6FQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
+<link href="./SIMTARUKU_files/MarkerCluster.Default.css" rel="stylesheet" integrity="sha512-BBToHPBStgMiw0lD4AtkRIZmdndhB6aQbXpX7omcrXeG2PauGBl2lzq2xUZTxaLxYz5IDHlmneCZ1IJ+P3kYtQ==" crossorigin="anonymous" referrerpolicy="no-referrer">
+<link href="./SIMTARUKU_files/leaflet.zoomhome.css" rel="stylesheet">
+<script src="./SIMTARUKU_files/jquery.js.download"></script>
+<script src="./SIMTARUKU_files/yii.js.download"></script>
+<script src="./SIMTARUKU_files/bootstrap.bundle.js.download"></script>
+<script src="./SIMTARUKU_files/leaflet.js.download"></script>
+<script src="./SIMTARUKU_files/esri-leaflet.js.download" integrity="sha512-ciMHuVIB6ijbjTyEdmy1lfLtBwt0tEHZGhKVXDzW7v7hXOe+Fo3UA1zfydjCLZ0/vLacHkwSARXB5DmtNaoL/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="./SIMTARUKU_files/leaflet.ajax.min.js.download" integrity="sha512-Abr21JO2YqcJ03XGZRPuZSWKBhJpUAR6+2wH5zBeO4wAw4oksr8PRdF+BKIRsxvCdq+Mv4670rZ+dLnIyabbGw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="./SIMTARUKU_files/leaflet.markercluster-src.js.download" integrity="sha512-gu3GZbPnPGREFcXgxeWVbp9Oeq3Tdvskd5PaQ0q//PCDMsa0WSSABIqLDwF5ebaDBfJbcM+lamNEe8ln9dPWwA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="./SIMTARUKU_files/leaflet.zoomhome.min.js.download"></script>
+<script src="./SIMTARUKU_files/L.TileLayer.BetterWMS.js.download"></script>
+<script src="./SIMTARUKU_files/pin-maps-root.js.download"></script>
+<script src="./SIMTARUKU_files/peta.js.download"></script></head>
+<body>
+        <main class="position-relative">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#test-sidebar" aria-controls="test-sidebar" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
+        <div id="test-sidebar" class="sidebar-info">
+            <div class="container border-bottom pb-2">
+                <a class="navbar-brand d-flex align-self-center" href="https://simtaruku.kulonprogokab.go.id/">
+                    <img src="./SIMTARUKU_files/client-logo1.png" alt="" height="50" class="mr-3">
+                    <div class="name-app">
+                        <h5 class="mb-1 text-dark">SIMTARUKU</h5>
+                        <h6 class="font-small text-dark">Kabupaten Kulon Progo</h6>
+                    </div>
+                </a>
+            </div>
+            <form id="gmaps_form" action="https://simtaruku.kulonprogokab.go.id/petaruang/" method="POST" data-pjax="1">            <div class="container py-2">
+                <div class="pencarian">
+                    <div class="input-search field-petasearch-keyword">
+
+                        <div class="p-2">
+                            <div class="position-relative">
+                                <input type="text" id="petasearch-keyword" class="form-control" name="PetaSearch[keyword]" value="sma 2" placeholder="Cari Tempat..."><button class="search-btn" type="submit"><i class="fa fa-search"></i></button>
+                            </div>
+                            <span class="help-block font-italic text-muted font-small ml-1">e.g : SMA N 1 Wates</span>
+                        </div>
+</div>                    <div class="input-search field-petasearch-koordinat">
+
+                        <div class="p-2">
+                            <div class="position-relative">
+                                <input type="text" id="petasearch-koordinat" class="form-control" name="PetaSearch[koordinat]" value="" placeholder="Cari Koordinat..."><button class="search-btn" type="submit"><i class="fa fa-search"></i></button>
+                            </div>
+                            <span class="help-block font-italic text-muted font-small ml-1">e.g : -7.77777,110.05486</span>
+                        </div>
+</div>                </div>
+            </div>
+            <div class="container border-bottom mt-3"></div>
+            <div class="container mt-3">
+                <div class="tab-content" id="pills-tabContent">
+                    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+                        <div class="text-center">
+                            <h5 class="mb-0 text-uppercase">RTRW</h5>
+                            <p class="font-small text-primary">Rencana Kawasan Budidaya</p>
+                        </div>
+                        <hr>
+                        <div class="legend">
+                                                        <div class="row pb-3">
+                                <div class="col">
+                                    <div style="background-color: #9bc79b;width: 100%;height: 100%"></div>
+                                </div>
+                                <div class="col-8 pl-0 font-small">Kawasan Perkebunan Rakyat</div>
+                            </div>
+                                                        <div class="row pb-3">
+                                <div class="col">
+                                    <div style="background-color: #c7f546;width: 100%;height: 100%"></div>
+                                </div>
+                                <div class="col-8 pl-0 font-small">Kawasan Tanaman Pangan</div>
+                            </div>
+                                                        <div class="row pb-3">
+                                <div class="col">
+                                    <div style="background-color: #96dbf1;width: 100%;height: 100%"></div>
+                                </div>
+                                <div class="col-8 pl-0 font-small">Badan Air</div>
+                            </div>
+                                                        <div class="row pb-3">
+                                <div class="col">
+                                    <div style="background-color: #eb9b3b;width: 100%;height: 100%"></div>
+                                </div>
+                                <div class="col-8 pl-0 font-small">Kawasan Permukiman Perdesaan</div>
+                            </div>
+                                                        <div class="row pb-3">
+                                <div class="col">
+                                    <div style="background-color: #690000;width: 100%;height: 100%"></div>
+                                </div>
+                                <div class="col-8 pl-0 font-small">Kawasan Peruntukan Industri</div>
+                            </div>
+                                                        <div class="row pb-3">
+                                <div class="col">
+                                    <div style="background-color: #e6ff4a;width: 100%;height: 100%"></div>
+                                </div>
+                                <div class="col-8 pl-0 font-small">Kawasan Hortikultura</div>
+                            </div>
+                                                        <div class="row pb-3">
+                                <div class="col">
+                                    <div style="background-color: #04d6d6;width: 100%;height: 100%"></div>
+                                </div>
+                                <div class="col-8 pl-0 font-small">Kawasan Perlindungan Setempat</div>
+                            </div>
+                                                        <div class="row pb-3">
+                                <div class="col">
+                                    <div style="background-color: #f59b1e;width: 100%;height: 100%"></div>
+                                </div>
+                                <div class="col-8 pl-0 font-small">Kawasan Permukiman Perkotaan</div>
+                            </div>
+                                                        <div class="row pb-3">
+                                <div class="col">
+                                    <div style="background-color: #eb1e1e;width: 100%;height: 100%"></div>
+                                </div>
+                                <div class="col-8 pl-0 font-small">Badan Jalan</div>
+                            </div>
+                                                        <div class="row pb-3">
+                                <div class="col">
+                                    <div style="background-color: #ff37cd;width: 100%;height: 100%"></div>
+                                </div>
+                                <div class="col-8 pl-0 font-small">Kawasan Cagar Budaya</div>
+                            </div>
+                                                        <div class="row pb-3">
+                                <div class="col">
+                                    <div style="background-color: #9b00ff;width: 100%;height: 100%"></div>
+                                </div>
+                                <div class="col-8 pl-0 font-small">Kawasan Pertahanan dan Keamanan</div>
+                            </div>
+                                                        <div class="row pb-3">
+                                <div class="col">
+                                    <div style="background-color: #82b8d2;width: 100%;height: 100%"></div>
+                                </div>
+                                <div class="col-8 pl-0 font-small">Kawasan Perikanan Budidaya</div>
+                            </div>
+                                                        <div class="row pb-3">
+                                <div class="col">
+                                    <div style="background-color: #ffa4ff;width: 100%;height: 100%"></div>
+                                </div>
+                                <div class="col-8 pl-0 font-small">Kawasan Pariwisata</div>
+                            </div>
+                                                        <div class="row pb-3">
+                                <div class="col">
+                                    <div style="background-color: #2c956d;width: 100%;height: 100%"></div>
+                                </div>
+                                <div class="col-8 pl-0 font-small">Kawasan Ekosistem Mangrove</div>
+                            </div>
+                                                        <div class="row pb-3">
+                                <div class="col">
+                                    <div style="background-color: #aeae37;width: 100%;height: 100%"></div>
+                                </div>
+                                <div class="col-8 pl-0 font-small">Kawasan Perkebunan</div>
+                            </div>
+                                                        <div class="row pb-3">
+                                <div class="col">
+                                    <div style="background-color: #639bd2;width: 100%;height: 100%"></div>
+                                </div>
+                                <div class="col-8 pl-0 font-small">Kawasan Perikanan Tangkap</div>
+                            </div>
+                                                        <div class="row pb-3">
+                                <div class="col">
+                                    <div style="background-color: #2c415f;width: 100%;height: 100%"></div>
+                                </div>
+                                <div class="col-8 pl-0 font-small">Kawasan Pertambangan Mineral Logam</div>
+                            </div>
+                                                        <div class="row pb-3">
+                                <div class="col">
+                                    <div style="background-color: #00827c;width: 100%;height: 100%"></div>
+                                </div>
+                                <div class="col-8 pl-0 font-small">Kawasan Konservasi di Wilayah Pesisir dan Pulau-Pulau Kecil</div>
+                            </div>
+                                                        <div class="row pb-3">
+                                <div class="col">
+                                    <div style="background-color: #7cb437;width: 100%;height: 100%"></div>
+                                </div>
+                                <div class="col-8 pl-0 font-small">Kawasan Hutan Produksi Tetap</div>
+                            </div>
+                                                        <div class="row pb-3">
+                                <div class="col">
+                                    <div style="background-color: #d63700;width: 100%;height: 100%"></div>
+                                </div>
+                                <div class="col-8 pl-0 font-small">Kawasan Transportasi</div>
+                            </div>
+                                                        <div class="row pb-3">
+                                <div class="col">
+                                    <div style="background-color: #4a9b37;width: 100%;height: 100%"></div>
+                                </div>
+                                <div class="col-8 pl-0 font-small">Kawasan Hutan Produksi Terbatas</div>
+                            </div>
+                                                        <div class="row pb-3">
+                                <div class="col">
+                                    <div style="background-color: #cd8663;width: 100%;height: 100%"></div>
+                                </div>
+                                <div class="col-8 pl-0 font-small">Kawasan Imbuhan Air Tanah</div>
+                            </div>
+                                                        <div class="row pb-3">
+                                <div class="col">
+                                    <div style="background-color: #6d866d;width: 100%;height: 100%"></div>
+                                </div>
+                                <div class="col-8 pl-0 font-small">Kawasan Cagar Alam Geologi</div>
+                            </div>
+                                                        <div class="row pb-3">
+                                <div class="col">
+                                    <div style="background-color: #315f28;width: 100%;height: 100%"></div>
+                                </div>
+                                <div class="col-8 pl-0 font-small">Kawasan Hutan Lindung</div>
+                            </div>
+                                                        <div class="row pb-3">
+                                <div class="col">
+                                    <div style="background-color: #6d6de0;width: 100%;height: 100%"></div>
+                                </div>
+                                <div class="col-8 pl-0 font-small">Suaka Margasatwa</div>
+                            </div>
+                                                    </div>
+                    </div>
+                </div>  
+            </div>
+        </form></div>
+        <div class="disclaimer">
+            Disclaimer : Peruntukan dan pemanfaatan tidak berlaku mutlak.
+        </div>
+                <div class="layer-basemap">
+            <button id="osm" class="btn button-filter">
+                <i class="fa fa-map"></i>
+                OSM
+            </button>
+            <button id="googleStreets" class="btn button-filter">
+                <i class="fa fa-map-signs"></i>
+                Streets
+            </button>
+            <button id="googleHybrid" class="btn button-filter">
+                <i class="fa fa-globe"></i>
+                Hybrid
+            </button>
+        </div>
+        <div class="filter-tataruang">
+            <div class="list-group">
+                <a href="https://simtaruku.kulonprogokab.go.id/petaruang?type=NEl1OFl2aDMrR3lzKzJ1YnZZaTN2aWdXc3lpZ2dGeW5FYThiWTBXTzRaQT0=" class="list-group-item list-group-item-action"><i class="fa fa-tree"></i>&nbsp; RTRW</a>
+                <a href="https://simtaruku.kulonprogokab.go.id/petaruang/#collapseExample" class="list-group-item list-group-item-action text-right collapsed" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="collapseExample">
+                    <span class="d-flex align-items-center">
+                        <i class="fa fa-building"></i>&nbsp; RDTR
+                        <span class="text-right ml-auto"><i class="fa fa-plus-square"></i></span>
+                    </span>
+                </a>
+                <div class="collapse " id="collapseExample">
+                <div class="card-body px-1 pb-0 text-light">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="peta_rdtr" id="perkotaan_wates" value="TXQ3VThkdjl4YVprYUxoQXpaYUZnRUlBenlrL2kzejQ2cXkybmdvcG11Yz0=">
+                        <label class="form-check-label" for="perkotaan_wates">Perkotaan Wates</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="peta_rdtr" id="kawasan_bandara" value="ckt3T1h5NEhrNlZyMmtWSkFnbjJuY1dOcE04WEZVZ1IxaDFzZlBkc0NrQT0=">
+                        <label class="form-check-label" for="kawasan_bandara">Kawasan Sekitar Bandara</label>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+        <div id="map" style="width: 100%; height: 100vh; position: relative;" data-detail="https://simtaruku.kulonprogokab.go.id/petaruang/detail" class="leaflet-container leaflet-touch leaflet-retina leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom" tabindex="0"><div class="leaflet-pane leaflet-map-pane" style="transform: translate3d(-299px, 0px, 0px);"><div class="leaflet-pane leaflet-tile-pane"><div class="leaflet-layer " style="z-index: 1; opacity: 1;"><div class="leaflet-tile-container leaflet-zoom-animated" style="z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);"><img alt="" src="./SIMTARUKU_files/1068.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(574px, 319px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/1068(1).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(830px, 319px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/1067.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(574px, 63px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/1067(1).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(830px, 63px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/1069.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(574px, 575px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/1069(1).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(830px, 575px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/1068(2).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(318px, 319px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/1068(3).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1086px, 319px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/1067(2).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(318px, 63px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/1067(3).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1086px, 63px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/1069(2).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(318px, 575px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/1069(3).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1086px, 575px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/1066.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(574px, -193px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/1066(1).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(830px, -193px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/1070.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(574px, 831px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/1070(1).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(830px, 831px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/1066(2).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(318px, -193px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/1066(3).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1086px, -193px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/1068(4).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(62px, 319px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/1068(5).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1342px, 319px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/1070(2).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(318px, 831px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/1070(3).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1086px, 831px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/1067(4).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(62px, 63px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/1067(5).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1342px, 63px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/1069(4).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(62px, 575px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/1069(5).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1342px, 575px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/1066(4).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(62px, -193px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/1066(5).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1342px, -193px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/1070(4).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(62px, 831px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/1070(5).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1342px, 831px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/1068(6).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-194px, 319px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/1068(7).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1598px, 319px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/1067(6).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-194px, 63px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/1067(7).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1598px, 63px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/1069(6).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-194px, 575px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/1069(7).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1598px, 575px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/1066(6).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-194px, -193px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/1066(7).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1598px, -193px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/1070(6).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-194px, 831px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/1070(7).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1598px, 831px, 0px); opacity: 1;"></div></div><div class="leaflet-layer " style="z-index: 1; opacity: 1;"><div class="leaflet-tile-container leaflet-zoom-animated" style="z-index: 18; transform: translate3d(0px, 0px, 0px) scale(1);"><img alt="" src="./SIMTARUKU_files/simtaruku-rtrw_fe.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(574px, 319px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/simtaruku-rtrw_fe(1).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(830px, 319px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/simtaruku-rtrw_fe(2).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(574px, 63px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/simtaruku-rtrw_fe(3).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(830px, 63px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/simtaruku-rtrw_fe(4).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(574px, 575px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/simtaruku-rtrw_fe(5).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(830px, 575px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/simtaruku-rtrw_fe(6).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(318px, 319px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/simtaruku-rtrw_fe(7).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1086px, 319px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/simtaruku-rtrw_fe(8).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(318px, 63px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/simtaruku-rtrw_fe(9).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1086px, 63px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/simtaruku-rtrw_fe(10).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(318px, 575px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/simtaruku-rtrw_fe(11).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1086px, 575px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/simtaruku-rtrw_fe(12).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(574px, -193px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/simtaruku-rtrw_fe(13).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(830px, -193px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/simtaruku-rtrw_fe(14).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(574px, 831px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/simtaruku-rtrw_fe(15).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(830px, 831px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/simtaruku-rtrw_fe(16).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(318px, -193px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/simtaruku-rtrw_fe(17).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1086px, -193px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/simtaruku-rtrw_fe(18).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(62px, 319px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/simtaruku-rtrw_fe(19).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1342px, 319px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/simtaruku-rtrw_fe(20).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(318px, 831px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/simtaruku-rtrw_fe(21).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1086px, 831px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/simtaruku-rtrw_fe(22).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(62px, 63px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/simtaruku-rtrw_fe(23).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1342px, 63px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/simtaruku-rtrw_fe(24).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(62px, 575px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/simtaruku-rtrw_fe(25).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1342px, 575px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/simtaruku-rtrw_fe(26).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(62px, -193px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/simtaruku-rtrw_fe(27).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1342px, -193px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/simtaruku-rtrw_fe(28).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(62px, 831px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/simtaruku-rtrw_fe(29).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1342px, 831px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/simtaruku-rtrw_fe(30).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-194px, 319px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/simtaruku-rtrw_fe(31).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1598px, 319px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/simtaruku-rtrw_fe(32).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-194px, 63px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/simtaruku-rtrw_fe(33).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1598px, 63px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/simtaruku-rtrw_fe(34).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-194px, 575px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/simtaruku-rtrw_fe(35).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1598px, 575px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/simtaruku-rtrw_fe(36).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-194px, -193px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/simtaruku-rtrw_fe(37).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1598px, -193px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/simtaruku-rtrw_fe(38).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(-194px, 831px, 0px); opacity: 1;"><img alt="" src="./SIMTARUKU_files/simtaruku-rtrw_fe(39).png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(1598px, 831px, 0px); opacity: 1;"></div></div></div><div class="leaflet-pane leaflet-overlay-pane"></div><div class="leaflet-pane leaflet-shadow-pane"></div><div class="leaflet-pane leaflet-marker-pane"></div><div class="leaflet-pane leaflet-tooltip-pane"></div><div class="leaflet-pane leaflet-popup-pane"></div><div class="leaflet-proxy leaflet-zoom-animated" style="transform: translate3d(422424px, 273506px, 0px) scale(1024);"></div></div><div class="leaflet-control-container"><div class="leaflet-top leaflet-left"></div><div class="leaflet-top leaflet-right"></div><div class="leaflet-bottom leaflet-left"></div><div class="leaflet-bottom leaflet-right"><div class="leaflet-control-zoomhome leaflet-bar leaflet-control"><a class="leaflet-control-zoomhome-in" href="https://simtaruku.kulonprogokab.go.id/petaruang/#" title="Zoom in" role="button" aria-label="Zoom in" aria-disabled="false">+</a><a class="leaflet-control-zoomhome-home" href="https://simtaruku.kulonprogokab.go.id/petaruang/#" title="Home" role="button" aria-label="Home"><i class="fa fa-home" style="line-height:1.65;"></i></a><a class="leaflet-control-zoomhome-out" href="https://simtaruku.kulonprogokab.go.id/petaruang/#" title="Zoom out" role="button" aria-label="Zoom out" aria-disabled="false">-</a></div><div class="leaflet-control-attribution leaflet-control"><a href="https://leafletjs.com/" title="A JavaScript library for interactive maps"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8" class="leaflet-attribution-flag"><path fill="#4C7BE1" d="M0 0h12v4H0z"></path><path fill="#FFD500" d="M0 4h12v3H0z"></path><path fill="#E0BC00" d="M0 7h12v1H0z"></path></svg> Leaflet</a></div></div></div></div>
+        <script>
+            $(document).ready(function () {
+                var layer = 'simtaruku:rtrw_fe';
+                var url = 'https://simtaruku.kulonprogokab.go.id/geoserver/wms';
+                var sld = 'https://simtaruku.kulonprogokab.go.id/sld/view?layer_name=NEl1OFl2aDMrR3lzKzJ1YnZZaTN2aWdXc3lpZ2dGeW5FYThiWTBXTzRaQT0%3D&jenis_peta=OEMxVzM2bW43azhpSmpHdXkvSUVVUT09';
+                set_double_layer(url, layer, sld);
+
+                $('.button-filter').on('click', function(){
+                    let id = $(this).attr('id');
+                    basemapLayer.clearLayers();
+                    basemapLayer.addLayer(eval(id));
+                    set_double_layer(url, layer, sld);
+                });
+
+                $('input[name=peta_rdtr]').click(function() {
+                    window.location.href = 'https://simtaruku.kulonprogokab.go.id/petaruang?type='+$('input[name=peta_rdtr]:checked').val();
+                });
+            });
+            var osm = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+            var googleStreets = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',{subdomains:['mt0','mt1','mt2','mt3']});
+            var googleHybrid = L.tileLayer('http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',{subdomains:['mt0','mt1','mt2','mt3']});
+
+            let basemapLayer = new L.LayerGroup().addLayer(osm);
+            var latlng = L.latLng(-7.77777,110.05486);
+            var map = L.map('map', {center: latlng, zoom: 11, zoomControl:false, layers: [basemapLayer]});
+            var zoomHome = L.Control.zoomHome({position: 'bottomright'}).addTo(map);
+            var markers = L.markerClusterGroup();
+            var polygon = new L.LayerGroup();
+            $.get('https://simtaruku.kulonprogokab.go.id/petaruang/get_data_pinmap?keyword=Q3RxUnBXbnpVWnlOdzAvYThwU3d4Zz09&koordinat=1', function( data ) {
+                for (var i = 0; i < data.length; i++) {
+                    var lat  = data[i][0];
+                    var long  = data[i][1];
+                    var link  = data[i][2];
+                    var title = data[i][3];
+                    try {
+                        var marker = L.marker(new L.LatLng(lat, long), { title: title });
+                    } catch (exception_var) {
+                    } finally {
+                        marker.bindPopup(link);
+                        markers.addLayer(marker);
+                    }
+                }
+                map.addLayer(markers);
+                polygon.addTo(map);
+            });
+        </script>
+    </main>
+    <div id="modal-form" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content"></div>
+        </div>
+    </div>
+    <script src="./SIMTARUKU_files/yii.activeForm.js.download"></script>
+<script>jQuery(function ($) {
+jQuery('#gmaps_form').yiiActiveForm([], []);
+});</script>
+
+</body></html>
